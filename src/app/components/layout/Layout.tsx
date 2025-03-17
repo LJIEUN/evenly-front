@@ -8,6 +8,7 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
 	return (
 		<div className="h-screen flex flex-col overflow-hidden">
+			<Header />
 			<main className="flex flex-col flex-1 overflow-hidden container mx-auto px-4 py-8">
 				{children}
 			</main>
