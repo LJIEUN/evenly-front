@@ -1,4 +1,5 @@
-import Layout from "./components/layout/Layout";
+import Layout from "@/components/layout/Layout";
+import "@/styles/global.css";
 
 export default function RootLayout({
 	children,
@@ -6,7 +7,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html>
 			<body suppressHydrationWarning>
 				<Layout>{children}</Layout>
 			</body>
