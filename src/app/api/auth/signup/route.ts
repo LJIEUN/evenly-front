@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     }
 
     // 백엔드 API 호출
-    const response = await fetch("http://dev-apne2-kr-evenly-app-lb-1348251896.ap-northeast-2.elb.amazonaws.com/mock/users/signup", {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId, password }),
