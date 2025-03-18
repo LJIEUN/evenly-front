@@ -11,7 +11,6 @@ const BaseInput = memo(
 				label,
 				required,
 				size = "md",
-				style = "textonly",
 				styleState = "default",
 				fullWidth = true,
 				className,
@@ -34,11 +33,11 @@ const BaseInput = memo(
     `;
 				const sizeStyles =
 					{
-						sm: `h-[1.5rem] px-[8px]`,
-						md: "h-[2rem] px-[12px]",
-						lg: "h-[2.5rem] px-[16px]",
-						xl: "h-[3.25rem] px-[24px]",
-					}[size] || "h-32 px-[12px]";
+						sm: `h-[1.5rem] px-[8px] py-[3px]`,
+						md: "h-[2rem] px-[12px] py-[5px]",
+						lg: "h-[2.5rem] px-[16px] py-[9px]",
+						xl: "h-[3.25rem] px-[24px] py-[14px]",
+					}[size] || "h-32 px-[12px] py-[5px]";
 
 				const stateStyles = {
 					default: "border border-gray-300 focus:border-gray-500",
@@ -59,7 +58,7 @@ const BaseInput = memo(
 					}`}
 				>
 					{label && (
-						<label className="block mb-2 text-body text-black">
+						<label className="block mb-2 text-black">
 							{label}
 							{required && <span className="text-red-500"> *</span>}
 						</label>
@@ -82,8 +81,8 @@ const BaseInput = memo(
 
 					{(error || helper) && (
 						<p
-							className={`mt-1 text-body-small ${
-								error ? "text-danger" : "text-gray-400"
+							className={`mt-1 text-sm ${
+								error ? "text-red-500" : "text-gray-400"
 							}`}
 						>
 							{error || helper}
