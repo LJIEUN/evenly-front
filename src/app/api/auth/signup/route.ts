@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { userId, password } = await req.json();
+    const { name, userId, password } = await req.json();
 
     // 입력값 검증
-    if (!userId || !password) {
+    if (!name || !userId || !password) {
       return NextResponse.json({ success: false, error: "필수 입력값이 없습니다." }, { status: 400 });
     }
 
@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId, password }),
+      body: JSON.stringify({ name, userId, password }),
     });
 
     if (!response.ok) {
