@@ -1,3 +1,4 @@
+import { validateId, validatePassword } from "@/utils/validate";
 import { ChangeEvent, FormEvent, useCallback, useState } from "react";
 
 type LoginFormType = "id" | "password";
@@ -25,6 +26,16 @@ const useLoginForm = ({ onSuccess, onError }: UseLoginFormProps) => {
 	const [errors, setErrors] = useState<FormErrors>({});
 
 	const validateForm = useCallback(() => {
+		const newErrors: FormErrors = {};
+
+		const idError = validateId(formState.id);
+		if (idError) newErrors.id = idError;
+
+		const passwordError = validatePassword(formState.password);
+		if (passwordError) newErrors.password = passwordError;
+
+		setErrors(newErrors);
+		return Object.keys(newErrors).length === 0;
 	}, [formState.id, formState.password]);
 
 	const handleFormChange = useCallback(
