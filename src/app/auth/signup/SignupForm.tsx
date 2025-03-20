@@ -3,8 +3,9 @@ import { useState } from "react";
 
 export default function SignupForm() {
 
+    const [name, setName] = useState("");
     const [userId, setUserId] = useState("");
-    const [password, setPassword] = useState("");
+    const [password, setPassword] = useState(""); 
     const [confirmPassword, setConfirmPassword] = useState("");
     const [message, setMessage] = useState("");
 
@@ -12,7 +13,7 @@ export default function SignupForm() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault(); // 폼 기본 제출 동작 방지
 
-        if (!userId || !password || !confirmPassword) {
+        if (!name || !userId || !password || !confirmPassword) {
             setMessage("모든 필드를 입력해주세요.");
             return;
         }
@@ -26,7 +27,7 @@ export default function SignupForm() {
             const response = await fetch("/api/auth/signup", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ userId, password }),
+                body: JSON.stringify({ name, userId, password }),
             });
 
             const data = await response.json();
@@ -58,6 +59,8 @@ export default function SignupForm() {
                 <span className="text-[11px]">(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자)</span>
                 <label className="block text-gray-700 mt-[25px] mb-[5px]">Password check*</label>
                 <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="border bg-white p-2 w-full" required />
+                <label className="block text-gray-700 mt-[25px] mb-[5px]">Name*</label>
+                <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="border bg-white p-2 w-full" required />
                 <button type="submit" className="mt-[40px] mb-[5px] bg-black text-white font-bold px-4 py-2 rounded w-full">create account</button>
             </form>
         </div>

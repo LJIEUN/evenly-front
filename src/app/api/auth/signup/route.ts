@@ -1,19 +1,21 @@
 import { NextResponse } from "next/server";
 
+const API_BASE_URL = process.env.API_BASE_URL; // api 보안 처리 (AWS 주소 미노출)
+
 export async function POST(req: Request) {
   try {
-    const { userId, password } = await req.json();
+    const { name, userId, password } = await req.json();
 
     // 입력값 검증
-    if (!userId || !password) {
+    if (!name || !userId || !password) {
       return NextResponse.json({ success: false, error: "필수 입력값이 없습니다." }, { status: 400 });
     }
 
     // 백엔드 API 호출
-    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+    const response = await fetch(`${API_BASE_URL}/mock/users/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId, password }),
+      body: JSON.stringify({ name, userId, password }),
     });
 
     if (!response.ok) {
