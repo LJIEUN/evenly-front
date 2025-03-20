@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { validateId, validatePassword } from "@/utils/validate"; // 유효성 검사 함수 추가
 
 export default function SignupForm() {
 
@@ -15,6 +16,20 @@ export default function SignupForm() {
 
         if (!name || !userId || !password || !confirmPassword) {
             setMessage("모든 필드를 입력해주세요.");
+            return;
+        }
+
+        // 아이디 유효성 검사
+        const idError = validateId(userId);
+        if (idError) {
+            setMessage(idError);
+            return;
+        }
+
+        // 비밀번호 유효성 검사
+        const passwordError = validatePassword(password);
+        if (passwordError) {
+            setMessage(passwordError);
             return;
         }
 
