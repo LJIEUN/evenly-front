@@ -1,3 +1,4 @@
+import { login } from "@/app/api/auth/login/route";
 import { validateId, validatePassword } from "@/utils/validate";
 import { ChangeEvent, FormEvent, useCallback, useState } from "react";
 
@@ -49,6 +50,22 @@ const useLoginForm = ({ onSuccess, onError }: UseLoginFormProps) => {
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
+
+		if (!validateForm()) return;
+
+		try {
+			await login({ id: formState.id, password: formState.password });
+
+			onSuccess?.();
+		} catch (error) {
+			const errorMessage =
+				error instanceof Error ? error.message : "로그인 실패";
+			console.log(errorMessage);
+			onError?.(error as Error);
+		} finally {
+			// TODO: Loading Animation
+			console.log("FINISH");
+		}
 	};
 
 	return {
