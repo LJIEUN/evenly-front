@@ -1,43 +1,42 @@
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
+@import "tailwindcss";
 
 :root {
-  --background-main: #EDEDED;
-  --background-alt: #F5F5F5;
-  
-  /* 🌿 Warm Beige 버전 */
-  --warm-beige: #F5F1EB;
-  --soft-sand: #F2E8DA;
-  --dusty-blue: #AFC8D9;
-  --soft-khaki: #C2B59B;
-  --soft-black: #333333;
-  --dark-gray: #555555;
-  --muted-clay: #D3A489;
+	--background-main: #ededed;
+	--background-alt: #f5f5f5;
 
-  /* ❄️ Off White 버전 */
-  --off-white: #FAFAFA;
-  --light-gray: #F5F5F5;
-  --muted-blue: #91A8B6;
-  --warm-khaki: #A8A18D;
-  --soft-gold: #D6B675;
+	/* 🌿 Warm Beige 버전 */
+	--warm-beige: #f5f1eb;
+	--soft-sand: #f2e8da;
+	--dusty-blue: #afc8d9;
+	--soft-khaki: #c2b59b;
+	--soft-black: #333333;
+	--dark-gray: #555555;
+	--muted-clay: #d3a489;
+
+	/* ❄️ Off White 버전 */
+	--off-white: #fafafa;
+	--light-gray: #f5f5f5;
+	--muted-blue: #91a8b6;
+	--warm-khaki: #a8a18d;
+	--soft-gold: #d6b675;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--font-sans: var(--font-geist-sans);
+	--font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+	:root {
+		--background: #ededed;
+		--foreground: #0a0a0a;
+	}
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+	background: var(--background);
+	color: var(--foreground);
+	font-family: Arial, Helvetica, sans-serif;
 }
