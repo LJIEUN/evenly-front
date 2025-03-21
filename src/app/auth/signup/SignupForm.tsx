@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 import { validateId, validatePassword } from "@/utils/validate"; // 유효성 검사 함수 추가
+import { useRouter } from "next/navigation";  // 페이지 전환을 위한 라우터
+
 
 export default function SignupForm() {
 
@@ -9,6 +11,8 @@ export default function SignupForm() {
     const [password, setPassword] = useState(""); 
     const [confirmPassword, setConfirmPassword] = useState("");
     const [message, setMessage] = useState("");
+    
+    const router = useRouter();
 
     // 회원가입 처리 함수
     const handleSubmit = async (e: React.FormEvent) => {
@@ -51,7 +55,13 @@ export default function SignupForm() {
                 throw new Error(data.error || "회원가입 실패");
             }
 
-            setMessage("회원가입 성공! 로그인 페이지로 이동하세요.");
+            setMessage("회원가입 성공! 5초 후 로그인 페이지로 이동합니다.");
+
+            // 5초 후 로그인 페이지로 이동
+            setTimeout(() => {
+                router.push("/login");
+            }, 5000);
+
         } catch (error) {
             if (error instanceof Error) {
                 setMessage(error.message);
