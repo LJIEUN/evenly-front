@@ -9,20 +9,24 @@ export async function GET() {
         const data = await res.json();
         return NextResponse.json(data);
     } catch (error) {
-        return NextResponse.json({ error: "사용자 정보를 불러오지 못했습니다." }, { status: 500});
+        return NextResponse.json({ error: "사용자 정보를 불러오지 못했습니다." }, { status: 500 });
     }
-    
+
 }
 
 // 마이페이지 비밀번호 수정 api 연동
 export async function PATCH(req: Request) {
+    return await requestUpdatePassword(req); // 실제 처리 함수
+}
+
+async function requestUpdatePassword(req: Request) {
+    const { password } = await req.json();
+
+    if (!password) {
+        return NextResponse.json({ error: "비밀번호가 필요합니다." }, { status: 400 });
+    }
+
     try {
-        const { password } = await req.json();
-
-        if (!password) {
-            return NextResponse.json({ error: "비밀번호가 필요합니다." }, { status: 400 });
-        }
-
         const res = await fetch(`${API_BASE_URL}/mock/users/my`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
