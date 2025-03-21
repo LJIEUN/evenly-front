@@ -55,12 +55,8 @@ export default function SignupForm() {
                 throw new Error(data.error || "회원가입 실패");
             }
 
-            setMessage("회원가입 성공! 5초 후 로그인 페이지로 이동합니다.");
-
-            // 5초 후 로그인 페이지로 이동
-            setTimeout(() => {
-                router.push("/login");
-            }, 5000);
+            alert("회원가입 성공! 로그인 페이지로 이동합니다.");
+            router.push("/login");
 
         } catch (error) {
             if (error instanceof Error) {
@@ -72,7 +68,7 @@ export default function SignupForm() {
     };
 
     return (
-        <div id="contents" className="pt-[170px] pb-[80px] px-[25px] max-w-[400px] mr-[255px]">
+        <div id="contents" className="pt-[30px] pb-[30px] px-[25px] max-w-[400px] mr-[255px]">
             <form className="w-[400px]" onSubmit={handleSubmit}>
                 <h3 className="mb-[15px] pb-[30px]">create account</h3>
                 {message && <p className="text-red-500">{message}</p>}
