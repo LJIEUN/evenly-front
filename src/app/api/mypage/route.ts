@@ -13,3 +13,26 @@ export async function GET() {
     }
     
 }
+
+// 마이페이지 비밀번호 수정 api 연동
+export async function PATCH(req: Request) {
+    try {
+        const { password } = await req.json();
+
+        if (!password) {
+            return NextResponse.json({ error: "비밀번호가 필요합니다." }, { status: 400 });
+        }
+
+        const res = await fetch(`${API_BASE_URL}/mock/users/my`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ password }),
+        });
+
+        if (!res.ok) throw new Error("비밀번호 변경 실패");
+
+        return NextResponse.json({ message: "비밀번호가 변경되었습니다." });
+    } catch (error) {
+        return NextResponse.json({ error: "비밀번호 변경에 실패했습니다." }, { status: 500 });
+    }
+}
