@@ -10,11 +10,6 @@ export default function EditForm({ user, onCancel }: { user: { userId: string; n
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!password || !confirmPassword) {
-            setMessage("모든 필드를 입력해주세요.");
-            return;
-        }
-
         const passwordError = validatePassword(password);
         if (passwordError) {
             setMessage(passwordError);
