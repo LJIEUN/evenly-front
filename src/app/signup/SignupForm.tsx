@@ -1,5 +1,8 @@
 "use client";
 import { useState } from "react";
+import { validateId, validatePassword } from "@/utils/validate"; // 유효성 검사 함수 추가
+import { useRouter } from "next/navigation";  // 페이지 전환을 위한 라우터
+
 
 export default function SignupForm() {
 
@@ -8,6 +11,8 @@ export default function SignupForm() {
     const [password, setPassword] = useState(""); 
     const [confirmPassword, setConfirmPassword] = useState("");
     const [message, setMessage] = useState("");
+    
+    const router = useRouter();
 
     // 회원가입 처리 함수
     const handleSubmit = async (e: React.FormEvent) => {
@@ -15,6 +20,20 @@ export default function SignupForm() {
 
         if (!name || !userId || !password || !confirmPassword) {
             setMessage("모든 필드를 입력해주세요.");
+            return;
+        }
+
+        // 아이디 유효성 검사
+        const idError = validateId(userId);
+        if (idError) {
+            setMessage(idError);
+            return;
+        }
+
+        // 비밀번호 유효성 검사
+        const passwordError = validatePassword(password);
+        if (passwordError) {
+            setMessage(passwordError);
             return;
         }
 
@@ -36,7 +55,9 @@ export default function SignupForm() {
                 throw new Error(data.error || "회원가입 실패");
             }
 
-            setMessage("회원가입 성공! 로그인 페이지로 이동하세요.");
+            alert("회원가입 성공! 로그인 페이지로 이동합니다.");
+            router.push("/login");
+
         } catch (error) {
             if (error instanceof Error) {
                 setMessage(error.message);
@@ -47,7 +68,7 @@ export default function SignupForm() {
     };
 
     return (
-        <div id="contents" className="pt-[170px] pb-[80px] px-[25px] max-w-[400px] mr-[255px]">
+        <div id="contents" className="pt-[30px] pb-[30px] px-[25px] max-w-[400px] mr-[255px]">
             <form className="w-[400px]" onSubmit={handleSubmit}>
                 <h3 className="mb-[15px] pb-[30px]">create account</h3>
                 {message && <p className="text-red-500">{message}</p>}
