@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import EditForm from "./EditForm";
 
 export default function MyPage() {
     const [user, setUser] = useState<{ userId: string; name: string } | null>(null);
@@ -21,6 +22,11 @@ export default function MyPage() {
         }
         fetchUser();
     }, []);
+
+    // 회원 정보 수정 클릭 시 EditForm 표시
+    if (view === "edit") {
+        return <EditForm user={user} onCancel={() => setView("main")} />;
+    }
 
     return (
         <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
