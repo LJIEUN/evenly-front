@@ -1,40 +1,15 @@
 "use client";
-import { useState } from "react";
-import { validatePassword } from "@/utils/validate";
+import { useEditPasswordForm } from "./useEditPasswordForm";
 
 export default function EditForm({ user, onCancel }: { user: { userId: string; name: string } | null; onCancel: () => void }) {
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [message, setMessage] = useState("");
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        const passwordError = validatePassword(password);
-        if (passwordError) {
-            setMessage(passwordError);
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            setMessage("비밀번호가 일치하지 않습니다.");
-            return;
-        }
-
-        try {
-            const response = await fetch("/api/mypage", {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ password }),
-            });
-
-            if (!response.ok) throw new Error("비밀번호 변경 실패");
-
-            setMessage("비밀번호가 성공적으로 변경되었습니다.");
-        } catch (error) {
-            setMessage("오류가 발생했습니다.");
-        }
-    };
+    const {
+      password,
+      confirmPassword,
+      setPassword,
+      setConfirmPassword,
+      handleSubmit,
+      message
+    } = useEditPasswordForm(onCancel);
 
     return (
         <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
