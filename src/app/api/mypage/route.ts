@@ -40,3 +40,24 @@ async function requestUpdatePassword(req: Request) {
         return NextResponse.json({ error: "비밀번호 변경에 실패했습니다." }, { status: 500 });
     }
 }
+
+// 마이페이지 회원 탈퇴 api 연동 (Soft Delete)
+export async function DELETE() {
+    return await requestSoftDeleteUser();
+}
+
+async function requestSoftDeleteUser() {
+    try {
+        const res = await fetch(`${API_BASE_URL}/mock/users/my`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: "DELETED" }),
+        });
+
+        if (!res.ok) throw new Error("탈퇴 요청 실패");
+
+        return NextResponse.json({ message: "회원 탈퇴 처리 완료" });
+    } catch (error) {
+        return NextResponse.json({ error: "서버 오류로 탈퇴 실패" }, { status: 500 });
+    }
+}
