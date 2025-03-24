@@ -3,12 +3,12 @@ import { useEditPasswordForm } from "./useEditPasswordForm";
 
 export default function EditForm({ user, onCancel }: { user: { userId: string; name: string } | null; onCancel: () => void }) {
     const {
-      password,
-      confirmPassword,
-      setPassword,
-      setConfirmPassword,
-      handleSubmit,
-      message
+        password,
+        confirmPassword,
+        setPassword,
+        setConfirmPassword,
+        handleSubmit,
+        message
     } = useEditPasswordForm(onCancel);
 
     return (
@@ -26,6 +26,9 @@ export default function EditForm({ user, onCancel }: { user: { userId: string; n
                     <button type="submit" className="w-full bg-[var(--soft-black)] text-white py-2 rounded hover:bg-black">변경하기</button>
                     <button type="button" className="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-800" onClick={onCancel}>취소</button>
                 </div>
+                <p className="text-[12px] text-gray-500 text-center mt-[20px] cursor-pointer hover:underline" >
+                    회원 탈퇴
+                </p>
             </form>
         </div>
     );
