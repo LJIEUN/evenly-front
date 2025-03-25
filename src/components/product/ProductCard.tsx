@@ -25,7 +25,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 				{product.status !== "AVAILABLE" && (
 					<p className="text-xs text-[#555555]/50">SOLD OUT</p>
 				)}
-				<p className="text-sm">KRW ${product.price.toLocaleString()}</p>
+				<p className="text-sm">KRW {product.price.toLocaleString()}</p>
 			</div>
 		</div>
 	);
