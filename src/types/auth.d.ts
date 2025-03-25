@@ -1,5 +1,5 @@
 export interface AuthCredentials {
-	id: string;
+	userId: string;
 	password: string;
 }
 

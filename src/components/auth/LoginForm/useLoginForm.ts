@@ -54,7 +54,7 @@ const useLoginForm = ({ onSuccess, onError }: UseLoginFormProps) => {
 		if (!validateForm()) return;
 
 		try {
-			await login({ id: formState.id, password: formState.password });
+			await login({ userId: formState.id, password: formState.password });
 
 			onSuccess?.();
 		} catch (error) {
