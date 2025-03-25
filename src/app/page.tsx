@@ -1,5 +1,7 @@
 "use client";
 
-export default function Home() {
-	return <></>;
+import ProductList from "@/components/product/ProductList";
+
+export default function HomePage() {
+	return <ProductList />;
 }

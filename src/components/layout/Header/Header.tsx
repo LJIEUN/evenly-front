@@ -3,7 +3,7 @@ import React from "react";
 
 const Header = () => {
 	return (
-		<header className="max-w-[120rem] w-full mx-auto h-[4rem] flex justify-between items-center p-4">
+		<header className="w-full mx-auto h-[4rem] flex justify-between items-center p-4">
 			<div>
 				<Link href="/">
 					<h1 className="text-2xl font-bold cursor-pointer">Evenly</h1>
