@@ -1,4 +1,4 @@
-import { login } from "@/app/api/auth/login/route";
+import useAuth from "@/hooks/useAuth";
 import { validateId, validatePassword } from "@/utils/validate";
 import { ChangeEvent, FormEvent, useCallback, useState } from "react";
 
@@ -25,6 +25,7 @@ const useLoginForm = ({ onSuccess, onError }: UseLoginFormProps) => {
 		password: "",
 	});
 	const [errors, setErrors] = useState<FormErrors>({});
+	const { login } = useAuth();
 
 	const validateForm = useCallback(() => {
 		const newErrors: FormErrors = {};
@@ -54,8 +55,7 @@ const useLoginForm = ({ onSuccess, onError }: UseLoginFormProps) => {
 		if (!validateForm()) return;
 
 		try {
-			await login({ id: formState.id, password: formState.password });
-
+			await login({ userId: formState.id, password: formState.password });
 			onSuccess?.();
 		} catch (error) {
 			const errorMessage =
