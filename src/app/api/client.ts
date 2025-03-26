@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://localhost:8000"; // 임시
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 interface ApiError extends Error {
 	statusCode: number;
