@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://localhost:8000"; // 임시
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 interface ApiError extends Error {
 	statusCode: number;
@@ -7,6 +7,7 @@ interface ApiError extends Error {
 
 interface RequestConfig extends RequestInit {
 	params?: Record<string, string>;
+	requireAuth?: boolean; // 인증이 필요한 요청인지 여부
 }
 
 /**
@@ -16,10 +17,16 @@ interface RequestConfig extends RequestInit {
  */
 async function client<T>(
 	endpoint: string,
-	{ params, ...customConfig }: RequestConfig = {}
+	{ params, requireAuth = true, ...customConfig }: RequestConfig = {}
 ): Promise<T> {
+	// TODO: 로컬스토리지 -> 쿠키로 변경하기?
+	const accessToken = localStorage.getItem("aeecssToken");
+
 	const headers = {
 		"Content-Type": "application/json",
+		...(requireAuth && accessToken
+			? { Authorization: `Bearer ${accessToken}` }
+			: {}),
 		...customConfig.headers,
 	};
 

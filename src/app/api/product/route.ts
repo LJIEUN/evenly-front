@@ -1,4 +1,4 @@
-import { Product, ProductResponse } from "@/types/product";
+import { ProductResponse } from "@/types/product";
 import { client } from "../client";
 
 // const ITEM_COUNT = 12;
@@ -9,7 +9,7 @@ export const getProducts = async (): // page: number = 1,
 // itemCount: number = ITEM_COUNT,
 // category: string = "all"
 Promise<ProductResponse> => {
-	return client<ProductResponse>("products", {
+	return client<ProductResponse>("/products", {
 		params: {},
 	});
 };
