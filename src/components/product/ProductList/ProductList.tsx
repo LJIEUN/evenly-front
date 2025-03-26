@@ -4,6 +4,7 @@ import ProductCard from "../ProductCard";
 import Link from "next/link";
 import useProductList from "./useProductList";
 import { useSearchParams, useRouter } from "next/navigation";
+import Pagination from "@/components/common/Pagination/Pagination";
 
 const ProductList = () => {
 	const { data, isLoading, error } = useProductList();
@@ -31,23 +32,11 @@ const ProductList = () => {
 					</Link>
 				))}
 			</div>
-			<div className="mt-8 flex justify-center gap-2">
-				{Array.from({ length: data.totalPages }, (_, index) => index + 1).map(
-					(page) => (
-						<button
-							key={page}
-							onClick={() => goToPage(page)}
-							className={`px-3 py-1 border rounded ${
-								page === currentPage
-									? "bg-[#afc8d9] text-white"
-									: "text-[#afc8d9] border-[#afc8d9] hover:bg-gray-100"
-							}`}
-						>
-							{page}
-						</button>
-					)
-				)}
-			</div>
+			<Pagination
+				totalPages={data.totalPages}
+				currentPage={currentPage}
+				onPageChange={goToPage}
+			/>
 		</div>
 	);
 };
