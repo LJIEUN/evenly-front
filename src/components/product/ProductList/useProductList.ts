@@ -3,8 +3,12 @@ import { Product } from "@/types/product";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
-interface ProductListProps {
+interface ProductListState {
 	products: Product[];
+	totalPages: number;
+}
+interface ProductListProps {
+	data: ProductListState;
 	isLoading: boolean;
 	error: Error | null;
 	refetch: () => void;
@@ -18,7 +22,10 @@ const useProductList = (): ProductListProps => {
 	const category = categoryParam ? parseInt(categoryParam, 10) : null;
 	const page = pageParam ? parseInt(pageParam, 10) : 1;
 
-	const [products, setProducts] = useState<Product[]>([]);
+	const [productState, setProductState] = useState<{
+		products: Product[];
+		totalPages: number;
+	}>({ products: [], totalPages: 1 });
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<Error | null>(null);
 
@@ -26,7 +33,10 @@ const useProductList = (): ProductListProps => {
 		setIsLoading(true);
 		try {
 			const data = await getProducts({ category, page });
-			setProducts(data.content);
+			setProductState({
+				products: data.content,
+				totalPages: data.totalPages,
+			});
 			setError(null);
 		} catch (error) {
 			setError(error as Error);
@@ -40,7 +50,10 @@ const useProductList = (): ProductListProps => {
 	}, [fetchProducts]);
 
 	return {
-		products,
+		data: {
+			products: productState.products,
+			totalPages: productState.totalPages,
+		},
 		isLoading,
 		error,
 		refetch: fetchProducts,
