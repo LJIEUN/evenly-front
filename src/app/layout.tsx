@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import Providers from "@/providers";
 import "@/styles/global.css";
 
 export default function RootLayout({
@@ -9,7 +10,9 @@ export default function RootLayout({
 	return (
 		<html>
 			<body suppressHydrationWarning>
-				<Layout>{children}</Layout>
+				<Providers>
+					<Layout>{children}</Layout>
+				</Providers>
 			</body>
 		</html>
 	);
