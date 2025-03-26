@@ -28,9 +28,11 @@ export const BUTTON_STYLES: Record<ButtonStyle, Record<ButtonColor, string>> = {
 		icon: "",
 		white: "",
 	},
-	text: {
-		dustyBlue: "text-[#AFC8D9] hover:bg-[#AFC8D9]]/10 active:bg-[#AFC8D9]/20",
-		softKhaki: "text-[#C2B59B] hover:bg-[#C2B59B]/10 active:bg-[#C2B59B]/20",
+	border: {
+		dustyBlue:
+			"text-[#AFC8D9] border border-[#AFC8D9] hover:text-[#AFC8D9]/40 active:text-[#AFC8D9]/40",
+		softKhaki:
+			"text-[#C2B59B] border border-#[C2B59B] hover:text-[#C2B59B]/40 active:text-[#C2B59B]/40",
 		icon: "",
 		white: "",
 	},
