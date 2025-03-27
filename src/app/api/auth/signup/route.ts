@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const API_BASE_URL = process.env.API_BASE_URL; // api 보안 처리 (AWS 주소 미노출)
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL; // api 보안 처리 (AWS 주소 미노출)
 
 export async function POST(req: Request) {
   try {
@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     }
 
     // 백엔드 API 호출
-    const response = await fetch(`${API_BASE_URL}/mock/users/signup`, {
+    const response = await fetch(`${API_BASE_URL}/auth/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, userId, password }),
