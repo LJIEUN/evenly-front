@@ -69,16 +69,20 @@ const BaseInput = memo(
 							{icon}
 						</div>
 					)}
+					<div className="relative">
+						<input
+							ref={ref}
+							disabled={disabled}
+							className={getInputStyles()}
+							{...props}
+						/>
 
-					<input
-						ref={ref}
-						disabled={disabled}
-						className={getInputStyles()}
-						{...props}
-					/>
-
-					{rightElement && <div>{rightElement}</div>}
-
+						{rightElement && (
+							<div className="absolute right-2 top-1/2 -translate-y-1/2">
+								{rightElement}
+							</div>
+						)}
+					</div>
 					{(error || helper) && (
 						<p
 							className={`mt-1 text-sm ${
