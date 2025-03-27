@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 
-const API_BASE_URL = process.env.API_BASE_URL;
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export async function GET() {
     try {
-        const res = await fetch(`${API_BASE_URL}/mock/users/my`);
+        const res = await fetch(`${API_BASE_URL}/users/my`);
         if (!res.ok) throw new Error("사용자 정보를 불러오지 못했습니다.");
         const data = await res.json();
         return NextResponse.json(data);
@@ -27,7 +27,7 @@ async function requestUpdatePassword(req: Request) {
     }
 
     try {
-        const res = await fetch(`${API_BASE_URL}/mock/users/my`, {
+        const res = await fetch(`${API_BASE_URL}/users/my`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ password }),
@@ -48,7 +48,7 @@ export async function DELETE() {
 
 async function requestSoftDeleteUser() {
     try {
-        const res = await fetch(`${API_BASE_URL}/mock/users/my`, {
+        const res = await fetch(`${API_BASE_URL}/users/my`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status: "DELETED" }),
