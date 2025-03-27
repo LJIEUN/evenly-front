@@ -13,18 +13,19 @@ export default function OrdersPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // 내부 API를 사용할 경우: /api/orders
-    // 외부 API를 사용할 경우: 실제 백엔드 주소로 변경
-    fetch('/api/orders')
-      .then(res => res.json())
-      .then(data => {
+    const fetchOrders = async () => {
+      try {
+        const res = await fetch('/api/orders')
+        const data = await res.json()
         setOrders(data)
-        setLoading(false)
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('주문 불러오기 실패:', error)
+      } finally {
         setLoading(false)
-      })
+      }
+    }
+
+    fetchOrders()
   }, [])
 
   return (
