@@ -4,17 +4,27 @@ import { validateId, validatePassword } from "@/utils/validate"; // 유효성 �
 import { useRouter } from "next/navigation";  // 페이지 전환을 위한 라우터
 
 export function useSignupForm() {
-    const [name, setName] = useState("");
-    const [userId, setUserId] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const [form, setForm] = useState({
+        name: '',
+        userId: '',
+        password: '',
+        confirmPassword: '',
+    })
     const [message, setMessage] = useState("");
 
     const router = useRouter();
 
+    // 입력 변경 핸들러 (공통)
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target
+        setForm(prev => ({ ...prev, [name]: value }))
+    }
+
     // 회원가입 처리
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault(); // 폼 기본 제출 동작 방지
+
+        const { name, userId, password, confirmPassword } = form
 
         if (!name || !userId || !password || !confirmPassword) {
             setMessage("모든 필드를 입력해주세요.");
@@ -66,10 +76,8 @@ export function useSignupForm() {
     };
 
     return {
-        name, setName,
-        userId, setUserId,
-        password, setPassword,
-        confirmPassword, setConfirmPassword,
+        form,
+        handleChange,
         handleSubmit,
         message,
     };
