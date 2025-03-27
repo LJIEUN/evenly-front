@@ -1,23 +1,25 @@
 import { Product } from "@/types/product";
 import Image from "next/image";
-import React, { useState } from "react";
-import BaseButton from "../common/Button/BaseButton";
-import NumberInput from "../common/Input/NumberInput";
+import BaseButton from "../../common/Button/BaseButton";
+import NumberInput from "../../common/Input/NumberInput";
 import { formatPrice } from "@/utils/format";
+import useProductDetail from "./useProductDetail";
 
 interface ProductDetailProps {
 	product: Product;
 }
 
 const ProductDetail = ({ product }: ProductDetailProps) => {
-	const [quantity, setQuantity] = useState<number>(1);
-	if (!product) return null;
-
-	const isAvailable = product.status === "AVAILABLE";
-
-	const onClick = () => {
-		console.log("click");
-	};
+	const {
+		quantity,
+		setQuantity,
+		isAvailable,
+		onClickCart,
+		onClickOrder,
+		onClickAlarm,
+	} = useProductDetail({
+		product,
+	});
 
 	return (
 		<div className="flex flex-col md:flex-row w-full gap-8">
@@ -49,16 +51,16 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
 
 					{isAvailable ? (
 						<div className="grid grid-cols-2 gap-2">
-							<BaseButton style="border" size="xl">
+							<BaseButton style="border" size="xl" onClick={onClickCart}>
 								장바구니
 							</BaseButton>
-							<BaseButton size="xl" onClick={onClick}>
+							<BaseButton size="xl" onClick={onClickOrder}>
 								구매
 							</BaseButton>
 						</div>
 					) : (
 						<div className="grid">
-							<BaseButton size="xl" onClick={onClick}>
+							<BaseButton size="xl" onClick={onClickAlarm}>
 								재입고알림
 							</BaseButton>
 						</div>
