@@ -1,5 +1,6 @@
 "use client";
-import { userLogin } from "@/app/api/auth/login/route";
+
+import { userLogin } from "@/service/user";
 import { AuthCredentials, AuthResponse, DecodedToken } from "@/types/auth";
 import { decodeJwt } from "@/utils/decodeJwt";
 import { createContext, useEffect, useState } from "react";

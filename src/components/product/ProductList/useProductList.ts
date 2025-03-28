@@ -1,4 +1,4 @@
-import { getProducts } from "@/app/api/product/route";
+import { getProducts } from "@/service/product";
 import { Product } from "@/types/product";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
