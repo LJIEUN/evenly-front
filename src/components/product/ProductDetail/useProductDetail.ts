@@ -11,21 +11,26 @@ const useProductDetail = ({ product }: UseProductDetailProps) => {
 
 	const isAvailable = product.status === "AVAILABLE";
 
-	const onClickCart = useCallback(async () => {
+	const onClickCart = useCallback(async (): Promise<boolean> => {
 		try {
 			await addProductToCart({ productId: product.id, quantity });
 			alert("장바구니에 담기 완료!");
+			return true;
 		} catch (error) {
+			alert("장바구니에 담기 실패ㅠㅠ");
 			console.log("장바구니 담기 실패", error);
+			return false;
 		}
 	}, [product.id, quantity]);
 
-	const onClickOrder = useCallback(async () => {
+	const onClickOrder = useCallback(async (): Promise<boolean> => {
 		try {
 			await orderProduct({ productId: product.id, quantity });
-			alert("결제로 이동!");
+			return true;
 		} catch (error) {
+			alert("구매에 실패했습니다.");
 			console.log("결제로 이동 실패", error);
+			return false;
 		}
 	}, [product.id, quantity]);
 
