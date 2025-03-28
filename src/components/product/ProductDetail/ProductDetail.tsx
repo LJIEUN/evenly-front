@@ -3,27 +3,28 @@ import Image from "next/image";
 import BaseButton from "../../common/Button/BaseButton";
 import NumberInput from "../../common/Input/NumberInput";
 import { formatPrice } from "@/utils/format";
-import useProductDetail from "./useProductDetail";
 
 interface ProductDetailProps {
 	product: Product;
+	quantity: number;
+	setQuantity: (quantity: number) => void;
+	isAvailable: boolean;
+	onClickCart: () => void;
+	onClickOrder: () => void;
+	onClickAlarm: () => void;
 }
 
-const ProductDetail = ({ product }: ProductDetailProps) => {
-	const {
-		quantity,
-		setQuantity,
-		isAvailable,
-		onClickCart,
-		onClickOrder,
-		onClickAlarm,
-	} = useProductDetail({
-		product,
-	});
-
+const ProductDetail = ({
+	product,
+	quantity,
+	setQuantity,
+	isAvailable,
+	onClickCart,
+	onClickOrder,
+	onClickAlarm,
+}: ProductDetailProps) => {
 	return (
 		<div className="flex flex-col md:flex-row w-full gap-8">
-			{/* 이미지 영역 */}
 			<div className="relative w-full max-w-xl aspect-[4/5]">
 				<Image
 					src={product.imageUrl}
@@ -34,11 +35,12 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
 					priority
 				/>
 			</div>
-			{/* 텍스트 및 조작 영역 */}
 			<div className="flex flex-col pt-2 gap-4 w-full md:max-w-lg">
 				<h1 className="text-2xl font-bold">{product.name}</h1>
+
 				<div className="flex flex-col pt-24 gap-4">
 					<h2 className="text-2xl font-bold">{formatPrice(product.price)}</h2>
+
 					{isAvailable ? (
 						<NumberInput
 							value={quantity}
@@ -66,6 +68,7 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
 						</div>
 					)}
 				</div>
+
 				<p className="text-sm pt-24 text-gray-700 whitespace-pre-wrap">
 					{product.description}
 				</p>
