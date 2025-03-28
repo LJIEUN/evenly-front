@@ -1,7 +1,7 @@
 "use client";
 
-import { getProductById } from "@/app/api/product/route";
 import ProductDetail from "@/components/product/ProductDetail/ProductDetail";
+import { getProductById } from "@/service/product";
 import { Product } from "@/types/product";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";

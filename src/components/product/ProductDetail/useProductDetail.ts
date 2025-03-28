@@ -1,4 +1,4 @@
-import { addProductToCart, orderProduct } from "@/app/api/product/route";
+import { addProductToCart, orderProduct } from "@/service/product";
 import { Product } from "@/types/product";
 import { useCallback, useState } from "react";
 

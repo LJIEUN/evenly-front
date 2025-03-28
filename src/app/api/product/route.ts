@@ -1,49 +1,26 @@
-import { OrderProduct, Product, ProductResponse } from "@/types/product";
-import { client } from "../client";
+// ✅ src/app/api/products/route.ts - GET 상품 리스트
+import { createErrorResponse, createJsonResponse } from "@/service/response";
+import { ProductResponse } from "@/types/product";
 
-/**
- * 상품 리스트를 가져오는 API
- */
-export const getProducts = async ({
-	category,
-	page = 1,
-}: {
-	category: number | null;
-	page: number;
-}): Promise<ProductResponse> => {
-	return client<ProductResponse>("/products", {
-		params: {
-			page: page.toString(),
-			category: category ? category.toString() : "",
-		},
-	});
-};
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-/**
- * 상품 상세정보를 가져오는 API
- */
-export const getProductById = async (id: number): Promise<Product> => {
-	return client<Product>(`/products/${id}`, {
-		params: {},
-	});
-};
+export async function GET(req: Request) {
+	try {
+		const { searchParams } = new URL(req.url);
+		const page = searchParams.get("page") || "1";
+		const category = searchParams.get("category") || "";
 
-/**
- * 상품을 장바구니에 추가하는 API
- */
-export const addProductToCart = async (item: OrderProduct): Promise<void> => {
-	return client<void>(`/cart`, {
-		method: "POST",
-		body: JSON.stringify(item),
-	});
-};
+		const query = new URLSearchParams({ page, category });
+		const response = await fetch(`${API_BASE_URL}/products?${query}`);
 
-/**
- * 상품을 결제로 이동하는 API
- */
-export const orderProduct = async (item: OrderProduct): Promise<void> => {
-	return client<void>(`/orders/create`, {
-		method: "POST",
-		body: JSON.stringify(item),
-	});
-};
+		if (!response.ok) {
+			return createErrorResponse("상품 목록 조회 실패", response.status);
+		}
+
+		const data: ProductResponse = await response.json();
+		return createJsonResponse(data, 200);
+	} catch (error) {
+		console.error("[GET /products]", error);
+		return createErrorResponse("Internal Server Error", 500);
+	}
+}
