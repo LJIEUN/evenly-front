@@ -20,7 +20,7 @@ async function client<T>(
 	{ params, requireAuth = true, ...customConfig }: RequestConfig = {}
 ): Promise<T> {
 	// TODO: 로컬스토리지 -> 쿠키로 변경하기?
-	const accessToken = localStorage.getItem("aeecssToken");
+	const accessToken = localStorage.getItem("access_token");
 
 	const headers = {
 		"Content-Type": "application/json",

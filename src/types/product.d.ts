@@ -17,3 +17,8 @@ export interface Product {
 	stock: number;
 	status: string;
 }
+
+export interface OrderProduct {
+	productId: number;
+	quantity: number;
+}

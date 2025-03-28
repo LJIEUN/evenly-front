@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 
 export type ButtonSize = "sm" | "md" | "lg" | "xl";
-export type ButtonStyle = "filled" | "text" | "icon" | "icon-round";
+export type ButtonStyle = "filled" | "border" | "icon" | "icon-round";
 export type ButtonColor = "dustyBlue" | "softKhaki" | "icon" | "white";
 
 export interface BaseButtonProps

@@ -1,4 +1,4 @@
-import { Product, ProductResponse } from "@/types/product";
+import { OrderProduct, Product, ProductResponse } from "@/types/product";
 import { client } from "../client";
 
 /**
@@ -25,5 +25,25 @@ export const getProducts = async ({
 export const getProductById = async (id: number): Promise<Product> => {
 	return client<Product>(`/products/${id}`, {
 		params: {},
+	});
+};
+
+/**
+ * 상품을 장바구니에 추가하는 API
+ */
+export const addProductToCart = async (item: OrderProduct): Promise<void> => {
+	return client<void>(`/cart`, {
+		method: "POST",
+		body: JSON.stringify(item),
+	});
+};
+
+/**
+ * 상품을 결제로 이동하는 API
+ */
+export const orderProduct = async (item: OrderProduct): Promise<void> => {
+	return client<void>(`/orders/create`, {
+		method: "POST",
+		body: JSON.stringify(item),
 	});
 };

@@ -15,7 +15,7 @@ const BaseButton = memo(
 				color = "dustyBlue",
 				leftIcon,
 				rightIcon,
-				// disabled,
+				disabled,
 				className,
 				children,
 				...props
@@ -29,7 +29,12 @@ const BaseButton = memo(
 			}, [size, style, color, className]);
 
 			return (
-				<button ref={ref} className={buttonStyles} {...props}>
+				<button
+					ref={ref}
+					className={buttonStyles}
+					disabled={disabled}
+					{...props}
+				>
 					{leftIcon && <span className="inline-flex">{leftIcon}</span>}
 					{children}
 					{rightIcon && <span className="inline-flex">{rightIcon}</span>}
