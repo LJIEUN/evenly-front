@@ -18,6 +18,7 @@ const ProductDetailPage = () => {
 
 	const fetchProduct = async () => {
 		const data = await getProductById(Number(id));
+		console.log(data);
 		setProduct(data);
 	};
 
