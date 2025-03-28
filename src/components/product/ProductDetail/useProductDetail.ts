@@ -3,27 +3,30 @@ import { Product } from "@/types/product";
 import { useCallback, useState } from "react";
 
 interface UseProductDetailProps {
-	product: Product;
+	product: Product | null;
 }
 
 const useProductDetail = ({ product }: UseProductDetailProps) => {
 	const [quantity, setQuantity] = useState<number>(1);
 
-	const isAvailable = product.status === "AVAILABLE";
+	const isAvailable = product?.status === "AVAILABLE";
 
 	const onClickCart = useCallback(async (): Promise<boolean> => {
+		if (!product) return false;
+
 		try {
 			await addProductToCart({ productId: product.id, quantity });
-			alert("장바구니에 담기 완료!");
 			return true;
 		} catch (error) {
 			alert("장바구니에 담기 실패ㅠㅠ");
 			console.log("장바구니 담기 실패", error);
 			return false;
 		}
-	}, [product.id, quantity]);
+	}, [product, quantity]);
 
 	const onClickOrder = useCallback(async (): Promise<boolean> => {
+		if (!product) return false;
+
 		try {
 			await orderProduct({ productId: product.id, quantity });
 			return true;
@@ -32,7 +35,7 @@ const useProductDetail = ({ product }: UseProductDetailProps) => {
 			console.log("결제로 이동 실패", error);
 			return false;
 		}
-	}, [product.id, quantity]);
+	}, [product, quantity]);
 
 	const onClickAlarm = () => {
 		alert("재입고 알림은 서비스 예정!");
