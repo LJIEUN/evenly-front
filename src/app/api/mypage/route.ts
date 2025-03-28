@@ -1,10 +1,21 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export async function GET() {
+// ✅ [1] 마이페이지 사용자 정보 조회 (GET)
+export async function GET(req: NextRequest) {
 	try {
-		const res = await fetch(`${API_BASE_URL}/users/my`);
+		const token = getAccessTokenFromHeader(req);
+		if (!token) {
+			return NextResponse.json({ error: "토큰이 없습니다." }, { status: 401 });
+		}
+
+		const res = await fetch(`${API_BASE_URL}/users/my`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+
 		if (!res.ok) throw new Error("사용자 정보를 불러오지 못했습니다.");
 		const data = await res.json();
 		return NextResponse.json(data);
@@ -16,12 +27,12 @@ export async function GET() {
 	}
 }
 
-// 마이페이지 비밀번호 수정 api 연동
-export async function PATCH(req: Request) {
-	return await requestUpdatePassword(req); // 실제 처리 함수
+// ✅ [2] 마이페이지 비밀번호 변경 (PATCH)
+export async function PATCH(req: NextRequest) {
+	return await requestUpdatePassword(req);
 }
 
-async function requestUpdatePassword(req: Request) {
+async function requestUpdatePassword(req: NextRequest) {
 	const { password } = await req.json();
 
 	if (!password) {
@@ -32,9 +43,17 @@ async function requestUpdatePassword(req: Request) {
 	}
 
 	try {
+		const token = getAccessTokenFromHeader(req);
+		if (!token) {
+			return NextResponse.json({ error: "토큰이 없습니다." }, { status: 401 });
+		}
+
 		const res = await fetch(`${API_BASE_URL}/users/my`, {
 			method: "PATCH",
-			headers: { "Content-Type": "application/json" },
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
 			body: JSON.stringify({ password }),
 		});
 
@@ -49,16 +68,24 @@ async function requestUpdatePassword(req: Request) {
 	}
 }
 
-// 마이페이지 회원 탈퇴 api 연동 (Soft Delete)
-export async function DELETE() {
-	return await requestSoftDeleteUser();
+// ✅ [3] 마이페이지 회원 탈퇴 (Soft Delete, PATCH로 처리)
+export async function DELETE(req: NextRequest) {
+	return await requestSoftDeleteUser(req);
 }
 
-async function requestSoftDeleteUser() {
+async function requestSoftDeleteUser(req: NextRequest) {
 	try {
+		const token = getAccessTokenFromHeader(req);
+		if (!token) {
+			return NextResponse.json({ error: "토큰이 없습니다." }, { status: 401 });
+		}
+
 		const res = await fetch(`${API_BASE_URL}/users/my`, {
 			method: "PATCH",
-			headers: { "Content-Type": "application/json" },
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
 			body: JSON.stringify({ status: "DELETED" }),
 		});
 
@@ -71,4 +98,12 @@ async function requestSoftDeleteUser() {
 			{ status: 500 }
 		);
 	}
+}
+
+// ✅ [공통] Authorization 헤더에서 Bearer 토큰 추출
+function getAccessTokenFromHeader(req: NextRequest): string | null {
+	const authHeader = req.headers.get("authorization");
+	if (!authHeader) return null;
+	const token = authHeader.split(" ")[1]; // "Bearer <token>"
+	return token || null;
 }
