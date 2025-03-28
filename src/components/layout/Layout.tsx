@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, Suspense } from "react";
 import Header from "./Header/Header";
 import Sidebar from "./SideBar/Sidebar";
 import { usePathname } from "next/navigation";
@@ -17,7 +17,11 @@ const Layout = ({ children }: LayoutProps) => {
 		<div className="h-screen flex flex-col overflow-hidden">
 			<Header />
 			<div className="flex flex-1 overflow-hidden">
-				{isHome && <Sidebar />}
+				{isHome && (
+					<Suspense fallback={<div className="p-4">사이드바 로딩중...</div>}>
+						<Sidebar />
+					</Suspense>
+				)}
 				<main className="flex flex-col flex-1 overflow-hidden container mx-auto px-4 py-8">
 					{children}
 				</main>

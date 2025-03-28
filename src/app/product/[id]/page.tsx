@@ -14,7 +14,7 @@ const ProductDetailPage = () => {
 	useEffect(() => {
 		if (!id) return;
 		fetchProduct();
-	});
+	}, []);
 
 	const fetchProduct = async () => {
 		const data = await getProductById(Number(id));
