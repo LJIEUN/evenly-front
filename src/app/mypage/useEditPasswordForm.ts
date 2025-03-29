@@ -4,7 +4,8 @@ import { validatePassword } from "@/utils/validate";
 import { useRouter } from "next/navigation";
 
 export function useEditPasswordForm(onSuccess: () => void) {
-  const [password, setPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const router = useRouter();
@@ -12,14 +13,14 @@ export function useEditPasswordForm(onSuccess: () => void) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const passwordError = validatePassword(password);
+    const passwordError = validatePassword(newPassword);
     if (passwordError) {
       setMessage(passwordError);
       return;
     }
 
-    if (password !== confirmPassword) {
-      setMessage("비밀번호가 일치하지 않습니다.");
+    if (newPassword !== confirmPassword) {
+      setMessage("새 비밀번호가 일치하지 않습니다.");
       return;
     }
 
@@ -33,7 +34,10 @@ export function useEditPasswordForm(onSuccess: () => void) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({
+          currentPassword: currentPassword, // 현재 비밀번호
+          newPassword: newPassword,     // 새 비밀번호
+        }),
       });
 
       if (!response.ok) throw new Error("비밀번호 변경 실패");
@@ -51,15 +55,15 @@ export function useEditPasswordForm(onSuccess: () => void) {
 
     try {
       const token = localStorage.getItem("access_token");
-			if (!token) throw new Error("로그인이 필요합니다.");
+      if (!token) throw new Error("로그인이 필요합니다.");
 
-			const res = await fetch("/api/mypage", {
-				method: "DELETE",
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
-      
+      const res = await fetch("/api/mypage", {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       if (!res.ok) throw new Error("회원 탈퇴 실패");
 
       alert("회원 탈퇴가 완료되었습니다.");
@@ -70,12 +74,14 @@ export function useEditPasswordForm(onSuccess: () => void) {
   };
 
   return {
-    password,
-    confirmPassword,
-    setPassword,
-    setConfirmPassword,
-    handleSubmit,
-    handleDelete,
-    message,
+		currentPassword,
+		setCurrentPassword,
+		newPassword,
+		confirmPassword,
+		setNewPassword,
+		setConfirmPassword,
+		handleSubmit,
+		handleDelete,
+		message,
   };
 }
