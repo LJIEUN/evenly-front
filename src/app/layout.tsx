@@ -1,6 +1,16 @@
 import Layout from "@/components/layout/Layout";
 import Providers from "@/providers";
 import "@/styles/global.css";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Evenly",
+	description: "Shopping with Envely",
+	icons: [
+		{ rel: "icon", url: "/favicon.svg" },
+		{ rel: "icon", url: "/favicon256x256.png" }, // fallback
+	],
+};
 
 export default function RootLayout({
 	children,
@@ -8,7 +18,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html>
+		<html lang="ko">
 			<body suppressHydrationWarning>
 				<Providers>
 					<Layout>{children}</Layout>
