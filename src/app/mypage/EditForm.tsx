@@ -23,7 +23,6 @@ export default function EditForm({ user, onCancel }: { user: { userId: string; n
                 <p><strong>이름:</strong> {user?.name || "name"}</p>
                 <label className="block text-gray-700 mt-[25px] mb-[5px]">현재 비밀번호</label>
                 <input type="password" name="currentPassword" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} className="border bg-white p-2 w-full h-[36px]" required />
-                <p className="text-xs text-gray-400 mt-1">현재 입력 값: {currentPassword}</p>
                 <label className="block text-gray-700 mt-[10px] mb-[5px]">새 비밀번호</label>
                 <input type="password" name="newPassword" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="border bg-white p-2 w-full h-[36px]" required />
                 <label className="block text-gray-700 mt-[10px] mb-[5px]">새 비밀번호 확인</label>
