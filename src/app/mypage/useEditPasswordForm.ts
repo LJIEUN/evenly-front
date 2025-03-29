@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { validatePassword } from "@/utils/validate";
 import { useRouter } from "next/navigation";
+import useAuth from "@/hooks/useAuth";
 
 export function useEditPasswordForm(onSuccess: () => void) {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -9,6 +10,7 @@ export function useEditPasswordForm(onSuccess: () => void) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const router = useRouter();
+  const { logout } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,6 +67,8 @@ export function useEditPasswordForm(onSuccess: () => void) {
       });
 
       if (!res.ok) throw new Error("회원 탈퇴 실패");
+
+      logout(); // 로그아웃 처리
 
       alert("회원 탈퇴가 완료되었습니다.");
       router.push("/");
