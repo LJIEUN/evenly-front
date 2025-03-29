@@ -10,7 +10,15 @@ export default function MyPage() {
     useEffect(() => {
         async function fetchUser() {
             try {
-                const res = await fetch("/api/mypage");
+                const token = localStorage.getItem("access_token");
+                if (!token) throw new Error("로그인 토큰이 없습니다.");
+
+                const res = await fetch("/api/mypage", {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`, // 토큰 헤더로 전달
+                    },
+                });
                 if (!res.ok) throw new Error("사용자 정보를 불러오지 못했습니다.");
                 const data = await res.json();
                 setUser(data);
