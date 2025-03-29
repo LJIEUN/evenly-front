@@ -44,8 +44,11 @@ export function useEditPasswordForm(onSuccess: () => void) {
 
       if (!response.ok) throw new Error("비밀번호 변경 실패");
 
-      setMessage("비밀번호가 성공적으로 변경되었습니다.");
-      onSuccess(); // 변경 완료 시 콜백 호출 (닫기 처리 같은)
+      logout(); // 로그아웃
+
+      alert("비밀번호가 변경되었습니다. 다시 로그인 해주세요.");
+      router.push("/");
+
     } catch {
       setMessage("오류가 발생했습니다.");
     }
