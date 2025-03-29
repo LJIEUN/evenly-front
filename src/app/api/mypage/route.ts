@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-// ✅ [1] 마이페이지 사용자 정보 조회 (GET)
+// 마이페이지 사용자 정보 조회 (GET)
 export async function GET(req: NextRequest) {
     try {
         const token = getAccessTokenFromHeader(req);
@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
     }
 }
 
-// ✅ [2] 마이페이지 비밀번호 변경 (PATCH)
+// 마이페이지 비밀번호 변경 (PATCH)
 export async function PATCH(req: NextRequest) {
     return await requestUpdatePassword(req);
 }
@@ -68,7 +68,8 @@ async function requestUpdatePassword(req: NextRequest) {
     }
 }
 
-// ✅ [3] 마이페이지 회원 탈퇴 (Soft Delete, PATCH로 처리)
+
+// 마이페이지 회원 탈퇴 (Soft Delete, DELETE로 처리)
 export async function DELETE(req: NextRequest) {
     return await requestSoftDeleteUser(req);
 }
@@ -81,19 +82,13 @@ async function requestSoftDeleteUser(req: NextRequest) {
         }
 
         const res = await fetch(`${API_BASE_URL}/users/my`, {
-            method: "PATCH",
+            method: "DELETE",
             headers: {
-                "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({ status: "DELETED" }),
         });
 
-        const resultText = await res.text(); // 👈
-        console.log("회원탈퇴 응답:", resultText);
-        console.log("탈퇴 바디:", JSON.stringify({ status: "DELETED" }));
-
-        if (!res.ok) throw new Error("탈퇴 요청 실패");
+        if (!res.ok) throw new Error("회원 탈퇴 요청 실패");
 
         return NextResponse.json({ message: "회원 탈퇴 처리 완료" });
     } catch {
