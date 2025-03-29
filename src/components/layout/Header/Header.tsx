@@ -13,7 +13,7 @@ const Header = () => {
 				</Link>
 			</div>
 			<div className="flex items-start gap-4 py-3">
-				<Link href="/" className="flex gap-2 px-4  cursor-pointer">
+				<Link href="/cart" className="flex gap-2 px-4  cursor-pointer">
 					<span className="text-link">Cart</span>
 				</Link>
 				<Link href="/mypage" className="flex gap-2 px-4  cursor-pointer">
