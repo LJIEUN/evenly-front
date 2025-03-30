@@ -15,7 +15,7 @@ interface CartItemProps {
 
 const CartItemCard = ({
 	product,
-	quantity,
+	// quantity,
 	onQuantityChange,
 	onRemove,
 }: CartItemProps) => {
