@@ -12,7 +12,7 @@ export default function EditForm({ user, onCancel }: { user: { userId: string; n
 		handleSubmit,
 		handleDelete,
 		message,
-    } = useEditPasswordForm(onCancel);
+    } = useEditPasswordForm();
 
     return (
         <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">

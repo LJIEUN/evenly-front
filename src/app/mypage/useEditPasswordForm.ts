@@ -4,7 +4,7 @@ import { validatePassword } from "@/utils/validate";
 import { useRouter } from "next/navigation";
 import useAuth from "@/hooks/useAuth";
 
-export function useEditPasswordForm(onSuccess: () => void) {
+export function useEditPasswordForm() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
