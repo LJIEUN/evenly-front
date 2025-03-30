@@ -6,6 +6,14 @@
   </defs>
   <g clip-path="url(#clip0_951_45)">
     <circle cx="126.5" cy="126.5" r="126.5" fill="#AFC8D9"/>
-    <path d="M82.125 55.0938H167.867V70.7188H99.7031V117.984H163.375V133.414H99.7031V180.875H168.844V196.5H82.125V55.0938Z" fill="#F5F5F5"/>
+    <!-- E 문자 -->
+    <!-- 수직 막대 -->
+    <rect x="70" y="50" width="20" height="150" fill="#F5F5F5"/>
+    <!-- 상단 가로줄 -->
+    <rect x="70" y="50" width="115" height="20" fill="#F5F5F5"/>
+    <!-- 중단 가로줄 -->
+    <rect x="70" y="116.5" width="95" height="20" fill="#F5F5F5"/>
+    <!-- 하단 가로줄 -->
+    <rect x="70" y="180" width="115" height="20" fill="#F5F5F5"/>
   </g>
 </svg>
