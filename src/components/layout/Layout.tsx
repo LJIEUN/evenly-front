@@ -14,15 +14,15 @@ const Layout = ({ children }: LayoutProps) => {
 	const isHome = pathname === "/";
 
 	return (
-		<div className="h-screen flex flex-col overflow-hidden">
+		<div className="h-screen flex flex-col">
 			<Header />
-			<div className="flex flex-1 overflow-hidden">
+			<div className="flex flex-1">
 				{isHome && (
 					<Suspense fallback={<div className="p-4">사이드바 로딩중...</div>}>
 						<Sidebar />
 					</Suspense>
 				)}
-				<main className="flex flex-col flex-1 overflow-hidden container mx-auto px-4 py-8">
+				<main className="flex flex-col flex-1 overflow-y-auto container mx-auto px-4 py-8">
 					{children}
 				</main>
 			</div>
